@@ -364,6 +364,9 @@
                     <label>Plan *</label>
                     <select name="plan_id">
                       <option value="" selected>Select Plan</option>
+                      @foreach ($supplierPlans as $supplierPlan)
+                      <option value="{{ $supplierPlan->id }}">{{ $supplierPlan->name }}</option>
+                      @endforeach
                     </select>
                     <span class="text-danger plan_id_err"></span>
                   </div>
@@ -387,15 +390,9 @@
                     <label>Supplier Type *</label>
                     <select name="supplier_type">
                       <option value="" selected>Select Type</option>
-                      <option value="1">Manufacturer</option>
-                      <option value="2">Wholesaler</option>
-                      <option value="3">Hybrid</option>
-                      <option value="4">Big Manufacturer</option>
-                      <option value="5">Medium Manufacturer</option>
-                      <option value="6">Small Manufacturer</option>
-                      <option value="7">Big Wholesaler</option>
-                      <option value="8">Medium Wholesaler</option>
-                      <option value="9">Small Wholesaler</option>
+                      @foreach ($supplierTypes as $supplierType )
+                      <option value="{{ $supplierType->id }}">{{ $supplierType->name }}</option>
+                      @endforeach
                     </select>
                     <span class="text-danger supplier_type_err"></span>
                   </div>
@@ -403,15 +400,18 @@
                 <div class="form-row">
                   <div class=" col-lg-4">
                     <label>Primary Category *</label>
-                    <select name="primary_category">
+                    <select name="primary_category" id="primary_category">
                       <option value="" selected>Select Category</option>
+                      @foreach ($categories as $category)
+                      <option value="{{ $category->id }}">{{ $category->name }}</option>
+                      @endforeach
                     </select>
                     <span class="text-danger primary_category_err"></span>
                   </div>
                   <div class="col-lg-4">
                     <label>Secondary Category *</label>
-                    <select name="secondary_category">
-                      <option value="" selected>Select Category</option>
+                    <select name="secondary_category" id="secondary_category">
+                      <option value="" selected>Select Secondary Category</option>
                     </select>
                     <span class="text-danger secondary_category_err"></span>
                   </div>
@@ -435,6 +435,25 @@
     }
   </style>
   <script type="text/javascript">
+    $(document).on('change', '#primary_category', function() {
+      var categoryId = $(this).val();
+      $.ajax({
+        method: "post",
+        url: "{{ route('supplier.subcategory1') }}",
+        data: {
+          "categoryId": categoryId,
+          "_token": "{{ csrf_token() }}",
+        },
+        beforeSend: function() {
+          $('#secondary_category').html('<option value="" selected><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="sr-only">Loading...</span></option>');
+        },
+        success: function(response) {
+          $('#secondary_category').html(response);
+        }
+      });
+    });
+
+
     function imageURL(input) {
       if (input.files && input.files[0]) {
         var reader = new FileReader();

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Dashboard | Business Development</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" con tent="width=device-width, initial-scale=1.0" />
 
     <meta content="" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -37,6 +37,12 @@
 </head>
 
 <body class="{{ request()->is('dashboard') ? '' : 'loading bg-white' }}" data-layout-mode="horizontal" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
+
+    <!-- loader -->
+    <div id="preloader" style="display:none">
+        <div id="loader"></div>
+    </div>
+
     <!-- Begin page -->
     <div id="wrapper">
         <!-- Topbar Start -->
@@ -78,7 +84,7 @@
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item active">
                                     <div class="notify-icon">
-                                        <img src="{{ asset('assets/images/users/user-1.jpg') }}" class="img-fluid rounded-circle" alt="" />
+                                        <img src="{{ asset('assets/images/logo.png') }}" class="img-fluid rounded-circle" alt="" />
                                     </div>
                                     <p class="notify-details">Cristina Pride</p>
                                     <p class="text-muted mb-0 user-msg">
@@ -136,7 +142,7 @@
 
                 <!-- LOGO -->
                 <div class="logo-box">
-                    <a href="index-2.html" class="logo logo-dark text-center">
+                    <a href="{{ URL('dashboard') }}" class="logo logo-dark text-center">
                         <span class="logo-sm">
                             <img src="{{ asset('assets/images/logo.png') }}" alt="" height="22" />
 
@@ -147,9 +153,9 @@
                         </span>
                     </a>
 
-                    <a href="index.html" class="logo logo-light text-center">
+                    <a href="{{ URL('dashboard') }}" class="logo logo-light text-center">
                         <span class="logo-lg">
-                            <img src="asset('assets/images/logo.png') }}" alt="" height="60" />
+                            <img src="{{ asset('assets/images/logo.png') }}" alt="" height="60" />
                         </span>
                     </a>
                 </div>
@@ -164,7 +170,7 @@
                     <div class="collapse navbar-collapse" id="topnav-menu-content">
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown">
-                                <a class="nav-link arrow-none" href="/dashboard" id="topnav-dashboard">Dashboard</a>
+                                <a class="nav-link arrow-none" href="{{ URL('dashboard') }}" id="topnav-dashboard">Dashboard</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-apps" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Supplier
@@ -176,7 +182,7 @@
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link arrow-none" href="/inventory" id="topnav-dashboard">Inventory</a>
+                                <a class="nav-link arrow-none" href="{{ URL('inventory') }}" id="topnav-dashboard">Inventory</a>
                             </li>
                         </ul>
                         <!-- end navbar-->
@@ -216,100 +222,45 @@
 
     <!-- scripts -->
     <!-- Vendor js -->
-    <script src="/assets/js/vendor.min.js"></script>
+    <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
 
     <!-- Plugins js-->
-    <script src="/assets/js/flatpickr.min.js"></script>
+    <script src="{{ asset('assets/js/flatpickr.min.js') }}"></script>
 
-    <script src="/assets/js/selectize.min.js"></script>
-    <script src="/assets/js/bootstrap-select.min.js"></script>
+    <script src="{{ asset('assets/js/selectize.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap-select.min.js') }}"></script>
 
 
     <!-- App js-->
-    <script src="/assets/js/app.min.js"></script>
+    <script src="{{ asset('assets/js/app.min.js') }}"></script>
 
-    <script src="/assets/js/footable.all.min.js"></script>
+    <script src="{{ asset('assets/js/footable.all.min.js') }}"></script>
 
 
     <!-- Below JS is used for creating more than one tables  for using in panel-->
-    <script src="/assets/js/foo-tables.init.js"></script>
+    <script src="{{ asset('assets/js/foo-tables.init.js') }}"></script>
 
 
-    <script src="/assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
     <!-- Gallery Init-->
-    <script src="/assets/js/gallery.init.js"></script>
+    <script src="{{ asset('assets/js/gallery.init.js') }}"></script>
 
     <!-- Below Js is used to highlight the searched word inside the datatable -->
-    <script type='text/javascript'>
-        window.onload = function() {
-            $(function() {
-                var mark = function() {
-                    // Read the keyword
-                    var keyword = $("input[name='keyword']").val();
-                    // Determine selected options
-                    var options = {
-                        "className": "match"
-                    };
-                    // Mark the keyword inside the context
-                    $(".context").removeMark();
-                    $(".context").mark(keyword, options);
-                };
-                $("input[name='keyword']").on("keyup", mark);
-                $("input[type='checkbox']").on("change", mark);
-            });
-        }
-    </script>
-    <script>
-        'use strict';
-        (function($, window, document, undefined) {
-            $('.inputfile').each(function() {
-                var $input = $(this),
-                    $label = $input.next('label'),
-                    labelVal = $label.html();
 
-                $input.on('change', function(e) {
-                    var fileName = '';
-
-                    if (this.files && this.files.length > 1)
-                        fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
-                    else if (e.target.value)
-                        fileName = e.target.value.split('\\').pop();
-
-                    if (fileName)
-                        $label.find('.archive-name').html(fileName);
-                    else
-                        $label.html(labelVal);
-                });
-                // Firefox bug fix
-                $input
-                    .on('focus', function() {
-                        $input.addClass('has-focus');
-                    })
-                    .on('blur', function() {
-                        $input.removeClass('has-focus');
-                    });
-            });
-        })(jQuery, window, document);
-
-        $('.blkodr').click(function() {
-            $('.blkbx').toggle();
-            $('.blkbx').toggleClass('display-flex');
-        })
-    </script>
-    <script src="/assets/js/sweetalert2.min.js"></script>
+    <script src="{{ asset('assets/js/sweetalert2.min.js') }}"></script>
 
     <!-- Sweet alert init js-->
-    <script src="/assets/js/sweet-alerts.init.js"></script>
-    <script src="/assets/js/dropzone.min.js"></script>
-    <script src="/assets/js/dropify.min.js"></script>
-    <script src="/assets/js/jquery.dataTables.min.js"></script>
-    <script src="/assets/js/dataTables.bootstrap4.min.js"></script>
-    <script src="/assets/js/dataTables.responsive.min.js"></script>
-    <script src="/assets/js/dataTables.buttons.min.js"></script>
-    <script src="/assets/js/buttons.print.min.js"></script>
-    <script src="/assets/js/datatables.init.js"></script>
-    <script src="/assets/js/jquery.steps.js"></script>
-    <script src="/assets/js/main.js"></script>
+    <script src="{{ asset('assets/js/sweet-alerts.init.js') }}"></script>
+    <script src="{{ asset('assets/js/dropzone.min.js') }}"></script>
+    <script src="{{ asset('assets/js/dropify.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('assets/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/js/datatables.init.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.steps.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
     <!-- end script -->
 
 </body>

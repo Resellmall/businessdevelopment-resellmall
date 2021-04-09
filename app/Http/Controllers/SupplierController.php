@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\State;
+use App\Models\Subcategory1;
+use App\Models\SupplierPlan;
+use App\Models\SupplierType;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -50,7 +54,10 @@ class SupplierController extends Controller
     public function create()
     {
         $states = State::all();
-        return view('supplier.add', ['states' => $states]);
+        $supplierPlans = SupplierPlan::all();
+        $supplerTypes = SupplierType::all();
+        $categories = Category::all();
+        return view('supplier.add', ['states' => $states, 'supplierPlans' => $supplierPlans, 'supplierTypes' => $supplerTypes, 'categories' => $categories]);
     }
 
     public function profile(Request $request)
@@ -206,12 +213,12 @@ class SupplierController extends Controller
                     //business
                     'aggregator' => 'required',
                     'aggregator_commission' => 'required_if:aggregator,1',
-                    //'plan_id' => 'required',
+                    'plan_id' => 'required',
                     'order_guarantee' => 'required',
                     'replica_supplier' => 'required',
                     'supplier_type' => 'required',
-                    //'primary_category' => 'required',
-                    //'secondary_category' => 'required'
+                    'primary_category' => 'required',
+                    'secondary_category' => 'required'
                 ],
                 [
                     'aggregator_commission.required_if' => 'The aggregator commission field is required when aggregator is Yes.'
@@ -255,8 +262,6 @@ class SupplierController extends Controller
                         $userName . "-CHEQUE-" . time() . "." . $ext
                     );
                 }
-
-
 
                 DB::beginTransaction();
                 try {
@@ -330,12 +335,12 @@ class SupplierController extends Controller
                             'sla_max' => $request->sla_max,
                             'aggregator' => $request->aggregator,
                             'aggregator_commission' => $request->aggregator_commission,
-                            'plan_id' => 1,
+                            'plan_id' => $request->plan_id,
                             'order_guarantee' => $request->order_guarantee,
                             'replica_supplier' => $request->replica_supplier,
                             'supplier_type' => $request->supplier_type,
-                            'primary_category' => 1,
-                            'secondary_category' => 2,
+                            'primary_category' => $request->primary_category,
+                            'secondary_category' => $request->secondary_category,
                             'created_at' => Carbon::now()->toDateTimeString()
                         ]
                     );
@@ -359,11 +364,15 @@ class SupplierController extends Controller
     {
         $userId = $request->id;
         $states = State::all();
-        $user = DB::table('users')->where('id', $userId)->first();
+        $supplierPlans = SupplierPlan::all();
+        $supplerTypes = SupplierType::all();
+        $categories = Category::all();
+        $subcategory1s = Subcategory1::all();
+        $user = User::findOrFail($userId);
         $userAddress = DB::table('user_addresses')->where('user_id', $userId)->first();
         $pickupAddress = DB::table('pickup_addresses')->where('user_id', $userId)->first();
         $supplierDetail = DB::table('supplier_details')->where('user_id', $userId)->first();
-        return view('supplier.edit', ['states' => $states, 'user' => $user, 'userAddress' => $userAddress, 'pickupAddress' => $pickupAddress, 'supplierDetail' => $supplierDetail]);
+        return view('supplier.edit', ['states' => $states, 'user' => $user, 'userAddress' => $userAddress, 'pickupAddress' => $pickupAddress, 'supplierPlans' => $supplierPlans, 'supplierTypes' => $supplerTypes, 'categories' => $categories, 'subcategory1s' => $subcategory1s, 'supplierDetail' => $supplierDetail]);
     }
 
     public function delete(Request $request)
@@ -1056,12 +1065,12 @@ class SupplierController extends Controller
                 [
                     'aggregator' => 'required',
                     'aggregator_commission' => 'required_if:aggregator,1',
-                    //'plan_id' => 'required',
+                    'plan_id' => 'required',
                     'order_guarantee' => 'required',
                     'replica_supplier' => 'required',
                     'supplier_type' => 'required',
-                    //'primary_category' => 'required',
-                    //'secondary_category' => 'required'               
+                    'primary_category' => 'required',
+                    'secondary_category' => 'required'
                 ],
                 [
                     'aggregator_commission.required_if' => 'The aggregator commission field is required when aggregator is Yes.'
@@ -1081,8 +1090,8 @@ class SupplierController extends Controller
                             'order_guarantee' => $request->order_guarantee,
                             'replica_supplier' => $request->replica_supplier,
                             'supplier_type' => $request->supplier_type,
-                            'primary_category' => 1,
-                            'secondary_category' => 2,
+                            'primary_category' => $request->primary_category,
+                            'secondary_category' => $request->secondary_category,
                             'action_id' => session()->get('userId'),
                             'updated_at' => Carbon::now()->toDateTimeString()
                         ]);
@@ -1097,6 +1106,19 @@ class SupplierController extends Controller
                 }
             }
             return response()->json(['error' => $validator->errors()]);
+        }
+    }
+
+    public function subcategory1(Request $request)
+    {
+        if ($request->ajax()) {
+            $categoryId = $request->categoryId;
+            $subcategory1s = DB::table('subcategory1s')->where('category_id', $categoryId)->get();
+            $data = "<option value='' selected>Select Secondary Category</option>";
+            foreach ($subcategory1s as $subcategory) {
+                $data .= "<option value='$subcategory->id'>$subcategory->name</option>";
+            }
+            return $data;
         }
     }
 }

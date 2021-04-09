@@ -16,6 +16,7 @@ class CreatePickupAddressesTable extends Migration
         Schema::create('pickup_addresses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('action_id')->nullable();
             $table->string('name', 26);
             $table->string('mobile', 10);
             $table->string('address', 200);

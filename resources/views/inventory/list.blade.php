@@ -21,20 +21,20 @@
                                     </div>
                                 </div>
                                 <select class="issue-select">
-                                            <option selected>Supplier</option>
-                                            <option>test@resellmall.com</option>                                            
-                                        </select>
-                                        <select class="issue-select">
-                                            <option selected>Status</option>
-                                            <option>All</option>
-                                            <option>In Stock</option>  
-                                            <option>Out Of Stock</option>   
-                                            <option>Approved</option>
-                                            <option>Rejected</option>                                        
-                                        </select>
+                                    <option selected>Supplier</option>
+                                    <option>test@resellmall.com</option>
+                                </select>
+                                <select class="issue-select">
+                                    <option selected>Status</option>
+                                    <option>All</option>
+                                    <option>In Stock</option>
+                                    <option>Out Of Stock</option>
+                                    <option>Approved</option>
+                                    <option>Rejected</option>
+                                </select>
                                 <a class="btn main-btn" href="#"><i data-feather="filter" class="icon-dual"></i> Filter</a>
-                                
-                                
+
+
                             </form>
                         </div>
                         <h4 class="page-title cnt-od">Manage Inventory( <span>100000 Products</span>)</h4>
@@ -104,13 +104,13 @@
                             <div class="col-6 text-right">
                                 <button class="btn btn-danger main-btn" href="#" id="in-stock">In Stock</button>
                                 <button class="btn btn-danger main-btn" href="#" id="out-stock">Out of Stock</button>
-                                                                
+
                             </div>
                         </div>
                     </div>
 
                     <div class="table-responsive">
-                        <table id="demo-foo-filtering" class="table context table-bordered toggle-circle mb-0 odr-tbl" data-page-size="2">
+                        <table id="demo-foo-filtering" class="table context table-bordered toggle-circle mb-0 odr-tbl">
                             <thead>
                                 <tr>
                                     <th data-toggle="false">S.No.</th>
@@ -124,7 +124,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                @for ($i =0; $i<20; $i++) <tr>
                                     <td>1 <input type="checkbox"></td>
                                     <td><span>35814</span></td>
                                     <td><span>30650</span></td>
@@ -146,19 +146,21 @@
 
 
                                     <td>
-                                        <p class="m-0"><a href="#"><span class="badge label-table badge-success">In Stock</span></a></p>                                        
+                                        <p class="m-0"><a href="#"><span class="badge label-table badge-success">In Stock</span></a></p>
                                         <p class="m-0"><strong>Return Policy </strong> : Available</p>
                                         <p class="m-0"><strong>Exchange </strong> : Not Available</p>
                                     </td>
                                     <td>
                                         <p class="m-0"><strong>SC</strong> : ₹100</p>
                                         <p class="m-0"><strong>SC without TDS</strong> : ₹100</p>
-                                        <p class="m-0"><strong>RM Price</strong> : ₹100</p>                                        
+                                        <p class="m-0"><strong>RM Price</strong> : ₹100</p>
                                     </td>
-                                    <td>                                        
+                                    <td>
                                         <p class="m-0"><a href="#"><span class="badge label-table badge-success">View Variant</span></a></p>
                                     </td>
-                                </tr>
+                                    </tr>
+                                    @endfor
+
                             </tbody>
                             <tfoot>
                                 <tr class="active">

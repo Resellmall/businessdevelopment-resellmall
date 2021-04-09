@@ -46,6 +46,8 @@ Route::group(['middleware' => ['isLogged']], function () {
     Route::post('supplier/updateAddress', [SupplierController::class, 'updateAddress']);
     Route::post('supplier/updateBusiness', [SupplierController::class, 'updateBusiness']);
 
+    Route::post('supplier/subcategory1', [SupplierController::class, 'subcategory1'])->name('supplier.subcategory1');
+
 
     Route::get('inventory', function () {
         return view('inventory.list');

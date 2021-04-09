@@ -16,6 +16,7 @@ class CreateUserAddressesTable extends Migration
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('action_id')->nullable();
             $table->string('name', 26);
             $table->string('mobile', 10);
             $table->string('address', 200);
@@ -25,7 +26,6 @@ class CreateUserAddressesTable extends Migration
             $table->integer('pincode');
             $table->integer('country_id');
             $table->timestamps();
-
         });
     }
 

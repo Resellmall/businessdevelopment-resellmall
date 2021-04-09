@@ -166,7 +166,11 @@
                     "_token": "{{ csrf_token() }}",
                     "id": id
                 },
+                beforeSend: function() {
+                    $('#preloader').css('display', 'block');
+                },
                 success: function(response) {
+                    $('#preloader').css('display', 'none');
                     if (response.success == 'success') {
                         $('.disp-bx').html(response.modal);
                         $('#edit-supp').modal('show');

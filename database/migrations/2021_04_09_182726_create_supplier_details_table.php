@@ -17,6 +17,7 @@ class CreateSupplierDetailsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('action_id')->nullable();
             $table->string('brand_name', 100);
             $table->string('poc_name', 26);
             $table->string('poc_mobile', 10);
