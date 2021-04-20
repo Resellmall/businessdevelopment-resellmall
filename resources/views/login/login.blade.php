@@ -11,14 +11,14 @@
     <link rel="shortcut icon" href="assets/images/logo.png" />
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- App css -->
-    <link href="assets/css/bootstrap-creative.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
-    <link href="assets/css/app-creative.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+    <link href="{{ asset('assets/css/bootstrap-creative.min.css') }}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+    <link href="{{ asset('assets/css/app-creative.min.css') }}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
 
-    <link href="assets/css/bootstrap-creative-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
-    <link href="assets/css/app-creative-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+    <link href="{{ asset('assets/css/bootstrap-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+    <link href="{{ asset('assets/css/app-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 
     <!-- icons -->
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="loading authentication-bg authentication-bg-pattern">
@@ -26,7 +26,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="offset-lg-2 offset-md-2 col-md-8 col-lg-8 col-xl-5 text-center">
-                    <img src="assets/images/logo.png" width="120" class="m-auto loginlogo" />
+                    <img src="{{ asset('assets/images/logo.png') }}" width="120" class="m-auto loginlogo" />
                     <div class="card z-3">
                         <div class="contact-form">
                             <h3 class="text-center">Login to your account</h3>
@@ -36,7 +36,7 @@
                             </p>
                             <!-- start-form -->
 
-                            <form class="contact_form" action="/login" method="post" name="contact_form" autocomplete="off">
+                            <form class="contact_form" action="{{ route('login') }}" method="post" name="contact_form" autocomplete="off">
                                 @csrf
                                 <ul>
                                     <li>
@@ -52,14 +52,14 @@
                                 <!-- <label class="checkbox"><input type="checkbox" name="checkbox" checked="" /><i></i>Remember me</label> -->
                                 <input type="submit" name="Sign In" value="Sign In" />
 
-                                
+
 
                                 <!-- <div class="forgot">
                                     <a href="#">forgot password?</a>
                                 </div> -->
                                 <div class="clear"></div>
                             </form>
-                            
+
                             <!-- end-form -->
                             <!-- start-account -->
                             <div class="account">
@@ -77,13 +77,13 @@
                             </div>
                             <!-- end-account -->
                             <div class="clear"></div>
-                            
+
                         </div>
                         @if(session()->get('fail'))
                         <div class="alert alert-danger" role="alert">
-                                    {{session()->get('fail')}}
-                                </div>
-                                @endif
+                            {{session()->get('fail')}}
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -94,10 +94,10 @@
     <!-- end page -->
 
     <!-- Vendor js -->
-    <script src="assets/js/vendor.min.js"></script>
+    <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
 
     <!-- App js -->
-    <script src="assets/js/app.min.js"></script>
+    <script src="{{ asset('assets/js/app.min.js') }}"></script>
 </body>
 
 </html>

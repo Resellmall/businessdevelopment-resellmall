@@ -22,7 +22,7 @@ Route::get('/', function () {
     }
     return view('login.login');
 });
-Route::post('login', [UserController::class, 'login']);
+Route::post('login', [UserController::class, 'login'])->name('login');
 
 Route::group(['middleware' => ['isLogged']], function () {
     Route::get('logout', [UserController::class, 'logout'])->name('logout');
